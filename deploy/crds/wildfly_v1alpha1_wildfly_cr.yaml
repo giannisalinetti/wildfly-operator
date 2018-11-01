@@ -1,0 +1,6 @@
+apiVersion: wildfly.extraordy.com/v1alpha1
+kind: Wildfly
+metadata:
+  name: example-wildfly
+spec:
+  size: 3
