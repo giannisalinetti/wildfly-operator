@@ -81,11 +81,6 @@ type ReconcileWildfly struct {
 
 // Reconcile reads that state of the cluster for a Wildfly object and makes changes based on the state read
 // and what is in the Wildfly.Spec
-// TODO(user): Modify this Reconcile function to implement your Controller logic.  This example creates
-// a Pod as an example
-// Note:
-// The Controller will requeue the Request to be processed again if the returned error is non-nil or
-// Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *ReconcileWildfly) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	log.Printf("Reconciling Wildfly %s/%s\n", request.Namespace, request.Name)
 
@@ -227,6 +222,7 @@ func (r *ReconcileWildfly) newWildflyDeployment(cr *wildflyv1alpha1.Wildfly) *ap
 	return dep
 }
 
+// newWildflyService returns a Service object for the Wildfly resource
 func (r *ReconcileWildfly) newWildflyService(cr *wildflyv1alpha1.Wildfly) *corev1.Service {
 	labels := map[string]string{
 		"app": cr.Name,
