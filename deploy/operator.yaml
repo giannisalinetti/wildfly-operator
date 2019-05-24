@@ -16,10 +16,10 @@ spec:
       containers:
         - name: wildfly-operator
           # Replace this with the built image name
-          image: docker.io/extraordy/wildfly-operator:v0.0.2
+          image: quay.io/gbsalinetti/wildfly-operator:latest
           ports:
-          - containerPort: 8080
-            name: wildfly
+          - containerPort: 60000
+            name: metrics
           command:
           - wildfly-operator
           imagePullPolicy: Always

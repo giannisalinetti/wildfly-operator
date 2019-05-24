@@ -9,7 +9,10 @@ import (
 
 // WildflySpec defines the desired state of Wildfly
 type WildflySpec struct {
-	Size int32 `json:"size"`
+	Size    int32    `json:"size"`
+	Image   string   `json:"image"`
+	Version string   `json:"version"`
+	Cmd     []string `json:"cmd"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 }

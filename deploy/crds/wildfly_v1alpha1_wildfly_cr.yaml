@@ -3,4 +3,10 @@ kind: Wildfly
 metadata:
   name: example-wildfly
 spec:
-  size: 3
+  size: 1
+  image: "docker.io/jboss/wildfly"
+  version: "14.0.1.Final"
+  cmd:
+    - "/opt/jboss/wildfly/bin/standalone.sh"
+    - "-b"
+    - "0.0.0.0"
