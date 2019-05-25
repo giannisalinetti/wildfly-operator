@@ -77,6 +77,11 @@ func (in *WildflySpec) DeepCopyInto(out *WildflySpec) {
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
+	if in.Ports != nil {
+		in, out := &in.Ports, &out.Ports
+		*out = make([]int32, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 

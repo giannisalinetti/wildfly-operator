@@ -3,6 +3,7 @@ package wildfly
 import (
 	"context"
 	"log"
+	"strconv"
 
 	wildflyv1alpha1 "github.com/giannisalinetti/wildfly-operator/pkg/apis/wildfly/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
@@ -213,6 +214,7 @@ func (r *ReconcileWildfly) newWildflyDeployment(cr *wildflyv1alpha1.Wildfly) *ap
 						Name:    containerNameString,
 						Image:   imageString + ":" + imageTag,
 						Command: commandSlice,
+						Ports:   r.loadContainerPorts(cr),
 					}},
 				},
 			},
@@ -220,6 +222,30 @@ func (r *ReconcileWildfly) newWildflyDeployment(cr *wildflyv1alpha1.Wildfly) *ap
 	}
 	controllerutil.SetControllerReference(cr, dep, r.scheme)
 	return dep
+}
+
+// loadContainerPorts creates a []corev1.ContainerPort slice with all the ports defined in the
+// custom resource.
+// TODO: handle both TCP and UDP
+func (r *ReconcileWildfly) loadContainerPorts(cr *wildflyv1alpha1.Wildfly) []corev1.ContainerPort {
+	containerPorts := []corev1.ContainerPort{}
+	if cr.Spec.Ports != nil {
+		for _, p := range cr.Spec.Ports {
+			cp := corev1.ContainerPort{
+				ContainerPort: int32(p),
+				Protocol:      corev1.ProtocolTCP,
+			}
+			containerPorts = append(containerPorts, cp)
+		}
+	} else {
+		// Manage defaults if no ports are provided by user
+		containerPorts = append(containerPorts, corev1.ContainerPort{
+			ContainerPort: 8080,
+			Protocol:      corev1.ProtocolTCP,
+		})
+	}
+	log.Printf("Completed loading ports: %v", containerPorts)
+	return containerPorts
 }
 
 // newWildflyService returns a Service object for the Wildfly resource
@@ -239,16 +265,34 @@ func (r *ReconcileWildfly) newWildflyService(cr *wildflyv1alpha1.Wildfly) *corev
 		},
 		Spec: corev1.ServiceSpec{
 			Selector: labels,
-			Ports: []corev1.ServicePort{
-				{
-					Name:     "default",
-					Port:     8080,
-					Protocol: corev1.ProtocolTCP,
-				},
-			},
+			Ports:    r.loadServicePorts(cr),
 		},
 	}
 
 	controllerutil.SetControllerReference(cr, svc, r.scheme)
 	return svc
+}
+
+// loadServicePorts creates a []corev1.ServicePort slice with all the ports defined in the
+// custom resource.
+// TODO: handle both TCP and UDP
+func (r *ReconcileWildfly) loadServicePorts(cr *wildflyv1alpha1.Wildfly) []corev1.ServicePort {
+	servicePorts := []corev1.ServicePort{}
+	if cr.Spec.Ports != nil {
+		for _, p := range cr.Spec.Ports {
+			sp := corev1.ServicePort{
+				Name:     "port-" + strconv.Itoa(int(p)),
+				Port:     int32(p),
+				Protocol: corev1.ProtocolTCP,
+			}
+			servicePorts = append(servicePorts, sp)
+		}
+	} else {
+		// Manage defaults if no ports are provided by user
+		servicePorts = append(servicePorts, corev1.ServicePort{
+			Port:     8080,
+			Protocol: corev1.ProtocolTCP,
+		})
+	}
+	return servicePorts
 }

@@ -13,6 +13,7 @@ type WildflySpec struct {
 	Image   string   `json:"image"`
 	Version string   `json:"version"`
 	Cmd     []string `json:"cmd"`
+	Ports   []int32  `json:"ports"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 }
