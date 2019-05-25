@@ -103,6 +103,11 @@ $ kubectl get svc -n wildfly
 NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 example-wildfly   ClusterIP   10.102.146.54   <none>        8080/TCP   2m
 ```
+## TODO
+- Add service port management in the custom resource
+- Add configmaps for the Wildfly config files.
+- Use Go template to change config files contents (datasources could be the 
+  first try).
 
 ## Contributing
 Please feel free to file Issues to improve usability and PRs to add new features.
