@@ -64,6 +64,8 @@ The **size** field is the number of desired replicas.
 The **cmd** field is an array of commands and parameters to be executed. If
 missing, the operator will fill it up with a default command to run a 
 default instance listening on port 0.0.0.0.
+The **ports** field is an array of ports in integer form to be exposed 
+in the container and by the service.
 ```
 apiVersion: wildfly.extraordy.com/v1alpha1
 kind: Wildfly
@@ -77,6 +79,9 @@ spec:
     - "/opt/jboss/wildfly/bin/standalone.sh"
     - "-b"
     - "0.0.0.0"
+  ports:
+    - 8080
+    - 8443
 ```
 
 After successful deployment of the operator the custom resource can be 
@@ -101,10 +106,9 @@ wildfly-operator-65b784bbb-zckg6   1/1       Running   0          10m
 
 $ kubectl get svc -n wildfly
 NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-example-wildfly   ClusterIP   10.102.146.54   <none>        8080/TCP   2m
+example-wildfly   ClusterIP   10.102.146.54   <none>        8080/TCP,8443/TCP   2m
 ```
 ## TODO
-- Add service port management in the custom resource
 - Add configmaps for the Wildfly config files.
 - Use Go template to change config files contents (datasources could be the 
   first try).
