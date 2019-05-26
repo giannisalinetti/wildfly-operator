@@ -11,5 +11,7 @@ spec:
     - "-b"
     - "0.0.0.0"
   ports:
-    - 8080
-    - 8443
+    - port: 8080
+      protocol: tcp
+    - port: 8443
+      protocol: tcp

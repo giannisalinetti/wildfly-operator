@@ -3,6 +3,7 @@ package wildfly
 import (
 	"context"
 	"log"
+	"regexp"
 	"strconv"
 
 	wildflyv1alpha1 "github.com/giannisalinetti/wildfly-operator/pkg/apis/wildfly/v1alpha1"
@@ -232,15 +233,19 @@ func (r *ReconcileWildfly) loadContainerPorts(cr *wildflyv1alpha1.Wildfly) []cor
 	if cr.Spec.Ports != nil {
 		for _, p := range cr.Spec.Ports {
 			cp := corev1.ContainerPort{
-				ContainerPort: int32(p),
-				Protocol:      corev1.ProtocolTCP,
+				ContainerPort: int32(p.Port),
+				Protocol:      r.matchProtocol(p),
 			}
 			containerPorts = append(containerPorts, cp)
 		}
 	} else {
-		// Manage defaults if no ports are provided by user
+		// Manage defaults if no ports are provided by user at all
 		containerPorts = append(containerPorts, corev1.ContainerPort{
 			ContainerPort: 8080,
+			Protocol:      corev1.ProtocolTCP,
+		})
+		containerPorts = append(containerPorts, corev1.ContainerPort{
+			ContainerPort: 8443,
 			Protocol:      corev1.ProtocolTCP,
 		})
 	}
@@ -281,9 +286,9 @@ func (r *ReconcileWildfly) loadServicePorts(cr *wildflyv1alpha1.Wildfly) []corev
 	if cr.Spec.Ports != nil {
 		for _, p := range cr.Spec.Ports {
 			sp := corev1.ServicePort{
-				Name:     "port-" + strconv.Itoa(int(p)),
-				Port:     int32(p),
-				Protocol: corev1.ProtocolTCP,
+				Name:     "port-" + strconv.Itoa(int(p.Port)),
+				Port:     int32(p.Port),
+				Protocol: r.matchProtocol(p),
 			}
 			servicePorts = append(servicePorts, sp)
 		}
@@ -293,6 +298,30 @@ func (r *ReconcileWildfly) loadServicePorts(cr *wildflyv1alpha1.Wildfly) []corev
 			Port:     8080,
 			Protocol: corev1.ProtocolTCP,
 		})
+		servicePorts = append(servicePorts, corev1.ServicePort{
+			Port:     8443,
+			Protocol: corev1.ProtocolTCP,
+		})
 	}
 	return servicePorts
+}
+
+// matchProtocol uses simple regular expressions do match the port protocol. If no value or
+// wrong content is passed it assumes TCP as the default.
+func (r ReconcileWildfly) matchProtocol(p wildflyv1alpha1.WildflyPortProto) corev1.Protocol {
+	matchTCP, err := regexp.MatchString(`[Tt][Cc][Pp]`, p.Protocol)
+	if err == nil && matchTCP {
+		return corev1.ProtocolTCP
+	} else if err != nil {
+		log.Printf("Failed to inspect protocol value: %v", err)
+	}
+	matchUDP, err := regexp.MatchString(`[Uu][Dd][Pp]`, p.Protocol)
+	if err == nil && matchUDP {
+		return corev1.ProtocolUDP
+	} else if err != nil {
+		log.Printf("Failed to inspect protocol value: %v", err)
+	}
+	// If no protocol satisfies the match we use TCP as the default
+	log.Printf("No matching protocol found, using TCP as default.")
+	return corev1.ProtocolTCP
 }
