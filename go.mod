@@ -1,60 +1,56 @@
 module github.com/giannisalinetti/wildfly-operator
 
-go 1.12
-
 require (
-	cloud.google.com/go v0.31.0
-	github.com/PuerkitoBio/purell v1.1.0
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
-	github.com/davecgh/go-spew v1.1.1
-	github.com/emicklei/go-restful v2.8.0+incompatible
-	github.com/ghodss/yaml v1.0.0
-	github.com/go-logr/logr v0.1.0
-	github.com/go-logr/zapr v0.1.0
-	github.com/go-openapi/jsonpointer v0.19.0
-	github.com/go-openapi/jsonreference v0.19.0
-	github.com/go-openapi/spec v0.17.2
-	github.com/go-openapi/swag v0.17.2
-	github.com/gogo/protobuf v1.1.1
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff
-	github.com/golang/protobuf v1.2.0
-	github.com/google/btree v1.0.0
-	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
-	github.com/google/uuid v1.1.1
-	github.com/googleapis/gnostic v0.2.0
-	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7
-	github.com/hashicorp/golang-lru v0.5.0
-	github.com/imdario/mergo v0.3.6
-	github.com/json-iterator/go v1.1.5
-	github.com/mailru/easyjson v0.0.0-20180823135443-60711f1a8329
-	github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
-	github.com/mholt/caddy v1.0.0 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
-	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
-	github.com/operator-framework/operator-sdk v0.0.0-20181031215731-7d70c5898a3e
-	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
-	github.com/petar/GoLLRB v0.0.0-20130427215148-53be0d36a84c
-	github.com/peterbourgon/diskv v2.0.1+incompatible
+	contrib.go.opencensus.io/exporter/ocagent v0.4.9 // indirect
+	github.com/Azure/go-autorest v11.5.2+incompatible // indirect
+	github.com/appscode/jsonpatch v0.0.0-20190108182946-7c0e3b262f30 // indirect
+	github.com/coreos/prometheus-operator v0.26.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/emicklei/go-restful v2.8.1+incompatible // indirect
+	github.com/go-logr/logr v0.1.0 // indirect
+	github.com/go-logr/zapr v0.1.0 // indirect
+	github.com/go-openapi/spec v0.18.0
+	github.com/golang/groupcache v0.0.0-20180924190550-6f2cf27854a4 // indirect
+	github.com/golang/mock v1.2.0 // indirect
+	github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c // indirect
+	github.com/google/uuid v1.0.0 // indirect
+	github.com/googleapis/gnostic v0.2.0 // indirect
+	github.com/gophercloud/gophercloud v0.0.0-20190318015731-ff9851476e98 // indirect
+	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7 // indirect
+	github.com/grpc-ecosystem/grpc-gateway v1.8.5 // indirect
+	github.com/imdario/mergo v0.3.6 // indirect
+	github.com/operator-framework/operator-sdk v0.8.1-0.20190527114655-ffc1bf561e79
+	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709 // indirect
+	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/spf13/pflag v1.0.3
-	go.uber.org/atomic v1.3.2
-	go.uber.org/multierr v1.1.0
-	go.uber.org/zap v1.9.1
-	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
-	golang.org/x/net v0.0.0-20190328230028-74de082e2cca
-	golang.org/x/oauth2 v0.0.0-20181031022657-8527f56f7107
-	golang.org/x/sys v0.0.0-20190228124157-a34e9553db1e
-	golang.org/x/text v0.3.0
-	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
-	golang.org/x/tools v0.0.0-20181031165350-3a10b9bf0a52
-	google.golang.org/appengine v1.2.0
-	gopkg.in/inf.v0 v0.9.1
-	gopkg.in/yaml.v2 v2.2.2
-	k8s.io/api v0.0.0-20180712090710-2d6f90ab1293
-	k8s.io/apimachinery v0.0.0-20180621070125-103fd098999d
-	k8s.io/client-go v0.0.0-20180806134042-1f13a808da65
-	k8s.io/code-generator v0.0.0-20180621065459-6702109cc68e
-	k8s.io/gengo v0.0.0-20181019081622-7338e4bfd691
-	k8s.io/kube-openapi v0.0.0-20181031203759-72693cb1fadd
-	sigs.k8s.io/controller-runtime v0.1.7
+	go.opencensus.io v0.19.2 // indirect
+	go.uber.org/atomic v1.3.2 // indirect
+	go.uber.org/multierr v1.1.0 // indirect
+	go.uber.org/zap v1.9.1 // indirect
+	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2 // indirect
+	k8s.io/api v0.0.0-20190222213804-5cb15d344471
+	k8s.io/apimachinery v0.0.0-20190221213512-86fb29eff628
+	k8s.io/client-go v2.0.0-alpha.0.0.20181126152608-d082d5923d3c+incompatible
+	k8s.io/code-generator v0.0.0-20180823001027-3dcf91f64f63
+	k8s.io/gengo v0.0.0-20190128074634-0689ccc1d7d6
+	k8s.io/kube-openapi v0.0.0-20180711000925-0cf8f7e6ed1d
+	sigs.k8s.io/controller-runtime v0.1.10
+	sigs.k8s.io/controller-tools v0.1.10
+	sigs.k8s.io/testing_frameworks v0.1.0 // indirect
+)
+
+// Pinned to kubernetes-1.13.1
+replace (
+	k8s.io/api => k8s.io/api v0.0.0-20181213150558-05914d821849
+	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.0.0-20181213153335-0fe22c71c476
+	k8s.io/apimachinery => k8s.io/apimachinery v0.0.0-20181127025237-2b1284ed4c93
+	k8s.io/client-go => k8s.io/client-go v0.0.0-20181213151034-8d9ed539ba31
+)
+
+replace (
+	github.com/coreos/prometheus-operator => github.com/coreos/prometheus-operator v0.29.0
+	k8s.io/code-generator => k8s.io/code-generator v0.0.0-20181117043124-c2090bec4d9b
+	k8s.io/kube-openapi => k8s.io/kube-openapi v0.0.0-20180711000925-0cf8f7e6ed1d
+	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.1.10
+	sigs.k8s.io/controller-tools => sigs.k8s.io/controller-tools v0.1.11-0.20190411181648-9d55346c2bde
 )

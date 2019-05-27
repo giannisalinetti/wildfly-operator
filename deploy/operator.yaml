@@ -17,9 +17,6 @@ spec:
         - name: wildfly-operator
           # Replace this with the built image name
           image: quay.io/gbsalinetti/wildfly-operator:latest
-          ports:
-          - containerPort: 60000
-            name: metrics
           command:
           - wildfly-operator
           imagePullPolicy: Always

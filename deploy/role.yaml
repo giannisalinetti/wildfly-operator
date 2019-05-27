@@ -33,6 +33,14 @@ rules:
   - get
   - create
 - apiGroups:
+  - apps
+  resourceNames:
+  - wildfly-operator
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
   - wildfly.extraordy.com
   resources:
   - '*'

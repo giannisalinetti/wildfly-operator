@@ -8,6 +8,7 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // WildflySpec defines the desired state of Wildfly
+// +k8s:openapi-gen=true
 type WildflySpec struct {
 	Size    int32              `json:"size"`
 	Image   string             `json:"image"`
@@ -16,6 +17,7 @@ type WildflySpec struct {
 	Ports   []WildflyPortProto `json:"ports"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
+	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 }
 
 // WildflyPorts defines sets of port/protocol
@@ -25,16 +27,18 @@ type WildflyPortProto struct {
 }
 
 // WildflyStatus defines the observed state of Wildfly
+// +k8s:openapi-gen=true
 type WildflyStatus struct {
-	Nodes []string `json:"nodes"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
+	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // Wildfly is the Schema for the wildflies API
 // +k8s:openapi-gen=true
+// +kubebuilder:subresource:status
 type Wildfly struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -1,5 +1,15 @@
-FROM alpine:3.6
+FROM registry.access.redhat.com/ubi7/ubi-minimal:latest
 
-USER nobody
+ENV OPERATOR=/usr/local/bin/wildfly-operator \
+    USER_UID=1001 \
+    USER_NAME=wildfly-operator
 
-ADD build/_output/bin/wildfly-operator /usr/local/bin/wildfly-operator
+# install operator binary
+COPY build/_output/bin/wildfly-operator ${OPERATOR}
+
+COPY build/bin /usr/local/bin
+RUN  /usr/local/bin/user_setup
+
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
+
+USER ${USER_UID}

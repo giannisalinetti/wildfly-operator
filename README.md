@@ -2,7 +2,7 @@
 
 This Wildfly Operator is not intended for production use. It is a self-training
 lab meant to explore the capabilities of operators and the 
-![operator-sdk](http://github.com/operator-framework/operator-sdk).
+[operator-sdk](http://github.com/operator-framework/operator-sdk).
 
 ## Building
 To build the operator use the `operator-sdk` CLI tool.
@@ -80,8 +80,10 @@ spec:
     - "-b"
     - "0.0.0.0"
   ports:
-    - 8080
-    - 8443
+    - port: 8080
+      protocol: "tcp"
+    - port: 8443
+      protocol: "tcp"
 ```
 
 After successful deployment of the operator the custom resource can be 
@@ -112,6 +114,8 @@ example-wildfly   ClusterIP   10.102.146.54   <none>        8080/TCP,8443/TCP   
 - Add configmaps for the Wildfly config files.
 - Use Go template to change config files contents (datasources could be the 
   first try).
+- Improve error cheching.
+- Add tests for wildfly controller.
 
 ## Contributing
 Please feel free to file Issues to improve usability and PRs to add new features.
