@@ -274,6 +274,11 @@ func (r *ReconcileWildfly) newWildflyService(cr *wildflyv1alpha1.Wildfly) *corev
 		},
 	}
 
+	if cr.Spec.NodePort {
+		svc.Spec.Type = corev1.ServiceTypeNodePort
+		log.Printf("Assigning a NodePort to the service for external access.\n")
+	}
+
 	controllerutil.SetControllerReference(cr, svc, r.scheme)
 	return svc
 }
